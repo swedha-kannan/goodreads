@@ -1,0 +1,215 @@
+<html>
+  <head>
+  	<style>
+* {
+  -webkit-transition: all 0.2s;
+  -moz-transition: all 0.2s;
+  -ms-transition: all 0.2s;
+  -o-transition: all 0.2s;
+  margin: 0;
+  padding: 0;
+}
+body {
+  background-color: #fff;
+  color: #181818;
+  font-size: 120%;
+  font-family: "Lato", "Helvetica Neue", "Helvetica", sans-serif;
+  line-height: 1.5;
+  background-image: url('../images/body-bg.jpg');
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: Lato, sans-serif;
+}
+a {
+  color: #000;
+}
+a:hover,
+a:active {
+  color: #000;
+}
+img {
+  max-width: 100%;
+}
+header {
+  background-color: #F4F1EA;
+  padding: 0.5em 1em;
+  font-family: Lato, sans-serif;
+  position: relative;
+}
+header a {
+  color: #000;
+  text-decoration: none;
+}
+.logo {
+  font-size: 1.0em;
+  text-transform: lowercase;
+  font-weight: 100;
+  opacity: 0.8;
+}
+.logo:hover,
+.logo:active {
+  color: #000;
+}
+nav {
+  position: relative;
+  background: rgba(0, 0, 0, 0.3);
+  margin: -1em -1em 1em -1em;
+}
+nav .main-nav {
+  height: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  overflow: hidden;
+}
+nav .main-nav li {
+  visibility: visible;
+}
+nav .main-nav.active {
+  height: auto;
+}
+nav .main-nav a {
+  display: block;
+  color: #181818;
+  padding: 0.5em 1em;
+}
+.main-nav li:nth-of-type(1) a {
+  background-color: rgba(0, 0, 0, 0.3);
+  padding-top: 1em;
+}
+.main-nav li:nth-of-type(2) a {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+.main-nav li:nth-of-type(3) a {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+nav .main-nav a:hover,
+nav .main-nav a:active {
+  color: #181818;
+  opacity: 0.6;
+  /*background: -webkit-linear-gradient(top,  rgba(255,255,255,0.05),  transparent);*/
+
+}
+.menu-button {
+  display: inline-block;
+  margin: 0;
+  background-color: rgba(0, 0, 0, 0.3);
+  padding: 1em 1em 0.5em 1em;
+}
+.menu-button .text {
+  display: none;
+}
+.menu-button a,
+.menu-button a:hover,
+.menu-button a:active {
+  color: #181818;
+  font-weight: lighter;
+}
+@media all and (min-width: 18em) {
+  .menu-button .text {
+    display: inline;
+  }
+}
+@media all and (min-width: 48em) {
+  .menu-button {
+    display: none;
+  }
+  nav .main-nav {
+    height: auto !important;
+    float: right;
+    margin-right: 400px;
+  }
+  .main-nav li {
+    display: inline-block;
+  }
+  .main-nav a {
+    background: transparent !important;
+  }
+}
+@media all and (min-width: 20em) and (max-width: 25.999999em) {
+  .main-nav li {
+    display: inline-block;
+    min-width: 49%;
+    max-width: 49%;
+  }
+}
+@media all and (min-width: 26em) and (max-width: 48em) {
+  .main-nav li {
+    display: inline-block;
+    min-width: 24%;
+    max-width: 24%;
+  }
+  .main-nav li a {
+    text-align: center;
+  }
+}
+
+input{
+  background: #fff;
+  border-radius: 3px;
+  padding: 7px;
+  margin: auto;
+  width: 400px;
+  border: #DCD6CC 1px solid;
+  color: #333333;
+  font-family: "Lato", "Helvetica Neue", "Helvetica", sans-serif;
+  resize: none;
+
+}
+.submit_search{
+  width: 100px;
+}
+  	</style>
+  </head>
+  <body>
+     <header>
+			<nav>
+       
+				<ul class="main-nav">
+          <li><%= link_to 'Home', root_path %></li><li>
+            <% if current_user%>
+              <%= link_to "My Books", user_user_ebooks_path(current_user.id) %>
+            <%else%>
+              <%= link_to 'My Books', root_path%>
+          <%end%>
+              <li><a href="/posts">Browse</a></li><li><a href="/contact">Community</a></li>	
+
+              <li>
+
+                <% if current_user%>
+                <%= form_tag(user_ebooks_path(current_user.id), method: :get) do %>
+                   <%= text_field_tag :ebooks %>
+                  <%= submit_tag 'Search', class: "submit_search" %>
+                <% end %>
+              <%else%>
+                <input type = text> Search </input>
+                <%end%>
+
+              </li>
+
+          <% if current_user %>
+           <%= current_user.email %>
+           <%= link_to 'Sign Out', sign_out_path, method: :delete %>
+         <% else %>
+      <%= link_to 'Sign Up', new_user_path %>
+    
+          <%= link_to 'Sign In', sign_in_path %>
+         <% end %>
+				</ul>
+				<div class="menu-button">
+					<a href="#"><span class="text">&nbsp;Menu</span></a>
+				</div>
+    
+			</nav>
+       <a class="logo" href="#">good<strong>reads</strong></a>
+   
+		</header>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+  </body>
+</html>
+

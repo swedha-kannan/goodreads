@@ -1,0 +1,16 @@
+<% if current_user.is_admin?  %>
+  <%= render '/layouts/nav_bar'%>
+  	<table cellspacing="0" cellpadding="0" border="0" width="100%" class="tableList">
+      <% @users.each do |user| %>
+  		<tr>
+  			<td width="100%" valign="top">
+          <a><div class= "bookTitle"><%= user.username %></div></a> <%= user.email%><br>
+  				<br>
+          <%= link_to 'Delete', "users/#{user.id}", controller: "users", action: "destroy", method: :delete, data: {confirm: "Are you sure?"} %>
+  			</td>
+  		</tr>
+    </table> 
+  <%end%>
+<% else %>
+  <p> Unauthorised access, please navigate back to <%= link_to 'Home', root_path%></p>
+<% end %>

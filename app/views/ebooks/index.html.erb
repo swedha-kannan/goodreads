@@ -1,0 +1,88 @@
+<html>
+  <head>
+    <%= render '/layouts/nav_bar' %>
+    <style>
+  	.bookTitle{
+  color: #333333;
+    font-family: "Merriweather", "Georgia", serif;
+    font-size: 120%;
+    font-weight: bold;
+    line-height: 1.3;
+}
+
+a{
+  color: #00635d;
+    text-decoration: none;
+}
+
+button{
+  color: #fff;
+    background-color: #409D69;
+    color: #fff;
+    width: 100px;
+    height: 3em;
+    padding: 8px;
+}
+
+table{
+  display: table;
+    border-collapse: separate;
+    border-spacing: 2px;
+    border-color: grey;
+    margin-left: 35%;
+    margin-top: 5%;
+}
+
+.form-group{
+  margin-left: 35%;
+  height: 3.5em;
+  padding: 10px;
+}
+
+.add_book_button{
+  margin-left: 35%;
+  background-color: green;
+  height: 2.5em;
+}
+</style>
+  </head>
+  <body>
+    <% if current_user %>
+        <% if current_user.is_admin and !current_user.nil?%>
+          <%= form_for @ebooks.first, :url => "users/#{current_user.id}/ebooks", method: :post do |f| %>
+
+          <div class="form-group">
+            <%= f.label :title %>
+            <%= f.text_field :title, class: 'form-control' %>
+          </div>
+
+          <div class="form-group">
+            <%= f.label :author %>
+            <%= f.text_field :author, class: 'form-control' %>
+          </div>
+
+          <div class="form-group">
+            <%= f.label :description %>
+            <%= f.text_field :description %>
+          </div>
+
+          <%= f.submit "Add Book", class: 'add_book_button' %>
+        <% end %>
+      <%end%>
+
+  	<table align="center" cellspacing="0" cellpadding="0" border="0" width="100%" class="tableList">
+      <% @ebooks.each do |ebook| %>
+  		<tr>
+  			<td width="5%" valign="top">Picture</td>
+  			<td width="100%" valign="top">
+          <a><div class= "bookTitle"><%= ebook.title %></div></a>by <%= ebook.author%><br><%= ebook.description %>
+  				<br>
+          <%= link_to 'Add to shelf', "/users/#{current_user.id}/user_ebooks/#{ebook.id}", method: :put, controller: 'user_books', :action => 'update' %>
+         
+  			</td>
+  		</tr>
+    <% end %>
+  <% end %>
+  </body>
+</html>
+
